@@ -1,11 +1,19 @@
+import 'package:fitness_app/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  List<CategoryModel> categories = [];
+
+  getCategories() {
+    categories = CategoryModel.getCategories();
+  }
 
   @override
   Widget build(BuildContext context) {
+    getCategories();
     return Scaffold(
       appBar: appBar(),
       body: Column(
@@ -28,6 +36,23 @@ class HomePage extends StatelessWidget {
               ),
             ],
           ), //if no comma, use comma and add on
+          Container(
+            height: 150,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: categories.length,
+              separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20), //=> or use return stmt
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: categories[index].boxColor.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(20)                    
+                  ),
+                );
+              }
+            ),
+          )
         ],
       ),
     );
