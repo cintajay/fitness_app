@@ -49,6 +49,19 @@ class HomePage extends StatelessWidget {
                     color: categories[index].boxColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(20)                    
                   ),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 50,
+                        width: 50,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white
+                        ),
+                        child: SvgPicture.asset(categories[index].iconPath),
+                      )
+                    ],
+                  )
                 );
               }
             ),
