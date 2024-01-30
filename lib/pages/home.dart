@@ -2,9 +2,14 @@ import 'package:fitness_app/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
 
   getCategories() {
@@ -12,8 +17,13 @@ class HomePage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     getCategories();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
       body: Column(
@@ -50,6 +60,7 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)                    
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
                         height: 50,
@@ -59,6 +70,14 @@ class HomePage extends StatelessWidget {
                           color: Colors.white
                         ),
                         child: SvgPicture.asset(categories[index].iconPath),
+                      ),
+                      Text(
+                        categories[index].name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black
+                        ),
                       )
                     ],
                   )
