@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _appBar(),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _searchField(),
           _categoriesText(), //if no comma, use comma and add on
@@ -58,7 +59,11 @@ class _HomePageState extends State<HomePage> {
 
   Container _categories() {
     return Container(
-          height: 150,
+          padding: const EdgeInsets.only(
+            left: 20,
+            right: 20
+          ),
+          height: 120,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
@@ -74,13 +79,14 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: 50,
-                      width: 50,
+                      height: 40,
+                      width: 40,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white
                       ),
                       child: SvgPicture.asset(categories[index].iconPath),
+                      alignment: Alignment.center,
                     ),
                     Text(
                       categories[index].name,
