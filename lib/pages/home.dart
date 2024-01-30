@@ -25,72 +25,80 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: _appBar(),
       body: Column(
         children: [
-          searchField(),
-          const Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  "Category",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  ),
-                  textAlign: TextAlign.left,
-                  
-                ),
-              ),
-            ],
-          ), //if no comma, use comma and add on
-          Container(
-            height: 150,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: categories.length,
-              separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20), //=> or use return stmt
-              itemBuilder: (context, index) {
-                return Container(
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: categories[index].boxColor.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(20)                    
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 50,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white
-                        ),
-                        child: SvgPicture.asset(categories[index].iconPath),
-                      ),
-                      Text(
-                        categories[index].name,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black
-                        ),
-                      )
-                    ],
-                  )
-                );
-              }
-            ),
-          )
+          _searchField(),
+          _categoriesText(), //if no comma, use comma and add on
+          _categories()
         ],
       ),
     );
   }
 
-  Container searchField() {
+  Column _categoriesText() {
+    return const Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                "Category",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                ),
+                textAlign: TextAlign.left,
+                
+              ),
+            ),
+          ],
+        );
+  }
+
+  Container _categories() {
+    return Container(
+          height: 150,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 20), //=> or use return stmt
+            itemBuilder: (context, index) {
+              return Container(
+                width: 100,
+                decoration: BoxDecoration(
+                  color: categories[index].boxColor.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(20)                    
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 50,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white
+                      ),
+                      child: SvgPicture.asset(categories[index].iconPath),
+                    ),
+                    Text(
+                      categories[index].name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black
+                      ),
+                    )
+                  ],
+                )
+              );
+            }
+          ),
+        );
+  }
+
+  Container _searchField() {
     return Container(
           margin: EdgeInsets.all(20),
           child: TextField(
@@ -119,7 +127,7 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  AppBar appBar() {
+  AppBar _appBar() {
     return AppBar(
       title: const Text(
         "Breakfast",
