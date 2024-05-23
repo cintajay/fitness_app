@@ -51,23 +51,38 @@ class _HomePageState extends State<HomePage> {
                   borderRadius: BorderRadius.circular(20)                    
                  ), 
                  child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
                       child: SvgPicture.asset(diets[index].iconPath),
-                      padding: EdgeInsets.all(10),
-
                     ),
-                    Text(
-                      diets[index].name, 
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16
-                      )
+                    Column(       //added a seperate column for the 2 texts to bring them closer
+                      children: [
+                        Text(
+                          diets[index].name, 
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 16
+                          )
+                        ),
+                        Text(
+                          diets[index].level +'|'+diets[index].duration +'|'+diets[index].calorie,
+                          style: TextStyle(
+                            color: Color(0xff7B6F72)
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      diets[index].level +'|'+diets[index].duration +'|'+diets[index].calorie,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 160, 130, 165)
+                    Container(
+                      height: 45,
+                      width: 130,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                          Color(0xff9DCEFF),
+                          Color(0xff92A3FD)
+                          ]
+                        )
                       ),
                     )
                   ],
