@@ -1,4 +1,5 @@
 import 'package:fitness_app/models/category_model.dart';
+import 'package:fitness_app/models/diet_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,15 +12,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
+  List<DietModel> diets = [];
 
-  getCategories() {
+  getInitialInfo() {
     categories = CategoryModel.getCategories();
+    diets = DietModel.getDiets();
   }
 
   @override
   void initState() {
     super.initState();
-    getCategories();
+    getInitialInfo();
   }
 
   @override
@@ -31,10 +34,68 @@ class _HomePageState extends State<HomePage> {
         children: [
           _searchField(),
           _categoriesText(), //if no comma, use comma and add on
-          _categories()
+          _categories(),
+          const SizedBox(
+            height: 20,
+          ),
+          _headerRecForDiet(),
+          Container(
+            height: 240,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return Container(
+                 width: 200,
+                 decoration: BoxDecoration(
+                  color: diets[index].boxColor.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(20)                    
+                 ), 
+                 child: Column(
+                  children: [
+                    Container(
+                      child: SvgPicture.asset(diets[index].iconPath),
+                      padding: EdgeInsets.all(10),
+
+                    ),
+                    Text(
+                      diets[index].name, 
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16
+                      )
+                    ),
+                    Text(
+                      diets[index].level +'|'+diets[index].duration +'|'+diets[index].calorie,
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 160, 130, 165)
+                      ),
+                    )
+                  ],
+                 )
+                );
+              }, 
+              separatorBuilder: (context, index) => const SizedBox(width: 20), 
+              itemCount: diets.length
+            ),
+          )
         ],
       ),
     );
+  }
+
+  Container _headerRecForDiet() {
+    return Container(
+          padding: EdgeInsets.all(20),
+          child: const Text(
+            "Recommendation \nfor Diet",
+            style: 
+            TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+          ),
+        );
   }
 
   Column _categoriesText() {
