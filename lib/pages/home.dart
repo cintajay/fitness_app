@@ -39,63 +39,75 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
           _headerRecForDiet(),
-          Container(
-            height: 240,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return Container(
-                 width: 200,
-                 decoration: BoxDecoration(
-                  color: diets[index].boxColor.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(20)                    
-                 ), 
-                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      child: SvgPicture.asset(diets[index].iconPath),
-                    ),
-                    Column(       //added a seperate column for the 2 texts to bring them closer
-                      children: [
-                        Text(
-                          diets[index].name, 
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16
-                          )
-                        ),
-                        Text(
-                          diets[index].level +'|'+diets[index].duration +'|'+diets[index].calorie,
-                          style: TextStyle(
-                            color: Color(0xff7B6F72)
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 45,
-                      width: 130,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                          Color(0xff9DCEFF),
-                          Color(0xff92A3FD)
-                          ]
-                        )
-                      ),
-                    )
-                  ],
-                 )
-                );
-              }, 
-              separatorBuilder: (context, index) => const SizedBox(width: 20), 
-              itemCount: diets.length
-            ),
-          )
+          _dietSection()
         ],
       ),
     );
+  }
+
+  Container _dietSection() {
+    return Container(
+          height: 240,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+               width: 200,
+               decoration: BoxDecoration(
+                color: diets[index].boxColor.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(20)                    
+               ), 
+               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    child: SvgPicture.asset(diets[index].iconPath),
+                  ),
+                  Column(       //added a seperate column for the 2 texts to bring them closer
+                    children: [
+                      Text(
+                        diets[index].name, 
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16
+                        )
+                      ),
+                      Text(
+                        diets[index].level +'|'+diets[index].duration +'|'+diets[index].calorie,
+                        style: TextStyle(
+                          color:  Color(0xff7B6F72)
+                        ),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 45,
+                    width: 130,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          diets[index].viewIsSelected ? Color(0xff9DCEFF): Colors.transparent,
+                          diets[index].viewIsSelected ? Color(0xff92A3FD): Colors.transparent,
+                        ]
+                      ),
+                      borderRadius: BorderRadius.circular(50)
+                    ),
+                    child: Text(
+                      'View',
+                      style: TextStyle(
+                        color: diets[index].viewIsSelected ? Colors.white : Color(0xffC58BF2)
+                      ),
+                    ),
+                  )
+                ],
+               )
+              );
+            }, 
+            separatorBuilder: (context, index) => const SizedBox(width: 20), 
+            itemCount: diets.length
+          ),
+        );
   }
 
   Container _headerRecForDiet() {
