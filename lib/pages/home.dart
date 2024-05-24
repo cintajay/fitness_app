@@ -1,5 +1,6 @@
 import 'package:fitness_app/models/category_model.dart';
 import 'package:fitness_app/models/diet_model.dart';
+import 'package:fitness_app/models/popular_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -13,10 +14,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<CategoryModel> categories = [];
   List<DietModel> diets = [];
+  List<PopularDietsModel> popularDiets = [];
 
   getInitialInfo() {
     categories = CategoryModel.getCategories();
     diets = DietModel.getDiets();
+    popularDiets = PopularDietsModel.getPopularDiets();
   }
 
   @override
@@ -29,8 +32,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _appBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           _searchField(),
           _categoriesText(), //if no comma, use comma and add on
@@ -39,7 +41,71 @@ class _HomePageState extends State<HomePage> {
             height: 20,
           ),
           _headerRecForDiet(),
-          _dietSection()
+          _dietSection(),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(
+              'Popular',
+              style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),
+            ),
+          ),
+          ListView.separated(
+            shrinkWrap: true, //this allows listView to scroll beyond view
+            itemBuilder: (context, index) {
+              return Container(
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      child: SvgPicture.asset(
+                        popularDiets[index].iconPath,
+                        width: 65,
+                        height: 65,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          popularDiets[index].name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black
+                          ),
+                        ),
+                        Text(
+                          popularDiets[index].level +'|'+popularDiets[index].duration +'|'+popularDiets[index].calorie,
+                          style: TextStyle(
+                            color:  Color(0xff7B6F72)
+                          )
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              );
+            }, 
+            separatorBuilder: (context, index) {
+              return SizedBox(
+                height: 20,
+              );
+            }, 
+            itemCount: popularDiets.length,
+            padding: EdgeInsets.all(20),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
         ],
       ),
     );
